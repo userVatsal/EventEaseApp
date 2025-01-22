@@ -1,1 +1,41 @@
+@page "/eventcard"
+@using EventEaseApp.Data
+@inject EventService EventService
+
+<h3>Event Card</h3>
+
+<EditForm Model="@event" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Event Name:</label>
+        <InputText @bind-Value="event.Name" />
+    </div>
+    <div>
+        <label>Event Date:</label>
+        <InputDate @bind-Value="event.Date" />
+    </div>
+    <div>
+        <label>Event Location:</label>
+        <InputText @bind-Value="event.Location" />
+    </div>
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+    private Event event = new Event();
+
+    private void HandleValidSubmit()
+    {
+        EventService.AddEvent(event);
+    }
+
+    public class Event
+    {
+        public string Name { get; set; }
+        public DateTime Date { get; set; }
+        public string Location { get; set; }
+    }
+}
 
