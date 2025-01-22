@@ -1,1 +1,49 @@
+@page "/register"
+@using System.ComponentModel.DataAnnotations
+
+<h3>Registration Form</h3>
+
+<EditForm Model="@user" OnValidSubmit="HandleValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Name:</label>
+        <InputText @bind-Value="user.Name" />
+        <ValidationMessage For="(() => user.Name)" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="user.Email" />
+        <ValidationMessage For="(() => user.Email)" />
+    </div>
+    <div>
+        <label>Age:</label>
+        <InputNumber @bind-Value="user.Age" />
+        <ValidationMessage For="(() => user.Age)" />
+    </div>
+    <button type="submit">Register</button>
+</EditForm>
+
+@code {
+    private User user = new User();
+
+    private void HandleValidSubmit()
+    {
+        // Handle registration logic
+    }
+
+    public class User
+    {
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; }
+
+        [Range(18, 99)]
+        public int Age { get; set; }
+    }
+}
 
